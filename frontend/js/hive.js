@@ -580,21 +580,7 @@ export function initHive() {
 
     try {
 
-      const response = await fetch("/api/farmers", {
-        method: "GET",
-        headers: {
-          "Accept": "application/json"
-        },
-        cache: "no-store"
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to load farmers (${response.status})`
-        );
-      }
-
-      const data = await response.json();
+      const data = await api.get("/api/farmers");
 
       const farmers = Array.isArray(data)
         ? data
