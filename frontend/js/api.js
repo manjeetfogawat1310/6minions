@@ -1,4 +1,4 @@
-export const API_BASE_URL = window.location.origin;
+export const API_BASE_URL = "https://sixminions-backend.onrender.com";
 
 const TIMEOUT_MS = 25000;
 
