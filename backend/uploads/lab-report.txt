@@ -1,0 +1,8 @@
+Honey Chain Laboratory Report
+
+Batch ID: DEMO-001
+Honey Type: Multifloral
+Quality Grade: A
+Purity: 98%
+Moisture: 18%
+Result: PASS
