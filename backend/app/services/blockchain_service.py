@@ -11,7 +11,10 @@ class BlockchainService:
    self.w3=Web3(Web3.HTTPProvider(self.s.blockchain_rpc_url,request_kwargs={'timeout':5}))
    if not self.w3.is_connected(): self.w3=None; self.reason='RPC unavailable'; return
    self.account=self.w3.eth.account.from_key(self.s.blockchain_private_key)
-   artifact=json.loads(Path(self.s.blockchain_artifact_path).read_text()); self.contract=self.w3.eth.contract(address=Web3.to_checksum_address(self.s.blockchain_contract_address),abi=artifact['abi'])
+   root_dir = Path(__file__).resolve().parents[3]
+   true_path = root_dir / "blockchain" / "artifacts" / "HoneyTraceability.json"
+   artifact = json.loads(true_path.read_text())
+   self.contract = self.w3.eth.contract(address=Web3.to_checksum_address(self.s.blockchain_contract_address), abi=artifact['abi'])
   except Exception as e: self.w3=None; self.reason=str(e)
  @property
  def available(self): return bool(self.w3 and self.contract and self.account)
