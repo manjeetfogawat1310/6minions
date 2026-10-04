@@ -52,7 +52,7 @@ def sync_demo_blockchain():
 
         if not bc.available:
             print("BLOCKCHAIN SYNC: unavailable")
-            print(f"BLOCKCHAIN ERROR: {bc.error}")
+            print(f'BLOCKCHAIN ERROR: {bc.reason}')
             return
 
         demo_batches = (
