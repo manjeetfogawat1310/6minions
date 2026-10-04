@@ -19,19 +19,20 @@ from .services.blockchain_service import BlockchainService, BlockchainUnavailabl
 from .schemas import FarmerCreate
 
 s=get_settings(); app=FastAPI(title=s.app_name,version='1.0.0')
-origins = [
-    x.strip()
-    for x in s.cors_origin_list.split(",")
-    if x.strip()
-]
+cors_origins = s.cors_origin_list
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins or ["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+if isinstance(cors_origins, list):
+    origins = [
+        x.strip()
+        for x in cors_origins
+        if x.strip()
+    ]
+else:
+    origins = [
+        x.strip()
+        for x in cors_origins.split(",")
+        if x.strip()
+    ]
 @app.on_event('startup')
 def startup():
     init_db()
