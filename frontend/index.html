@@ -152,55 +152,5 @@
 
   <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
 
-  <!-- Bees Effect -->
-  <div id="beehive" class="beehive" aria-hidden="true" title="Hover me!">雀</div>
-  <div id="bee-container"></div>
-  <script>
-    const hive = document.getElementById('beehive');
-    const container = document.getElementById('bee-container');
-    let isSwarming = false; 
-    hive.addEventListener('mouseenter', () => {
-      if (isSwarming) return; 
-      isSwarming = true;
-      const beeCount = Math.floor(Math.random() * 2) + 3; 
-      for (let i = 0; i < beeCount; i++) spawnHiveBee();
-      setTimeout(() => { isSwarming = false; }, 1500);
-    });
-    function spawnHiveBee() {
-      const rect = hive.getBoundingClientRect();
-      const startX = rect.left + rect.width / 2 - 15;
-      const startY = rect.top + rect.height / 2 - 15;
-      const bee = document.createElement('div');
-      bee.className = 'dynamic-bee';
-      bee.innerText = '雀';
-      container.appendChild(bee);
-      const angle = Math.random() * Math.PI * 2; 
-      const maxDist = Math.random() * 120 + 80; 
-      const duration = Math.random() * 1000 + 1500; 
-      let startTime = null;
-      function animate(time) {
-        if (!startTime) startTime = time;
-        const progress = (time - startTime) / duration;
-        if (progress >= 1) { bee.remove(); return; }
-        const outAndBack = Math.sin(progress * Math.PI); 
-        const baseX = startX + Math.cos(angle) * (maxDist * outAndBack);
-        const baseY = startY + Math.sin(angle) * (maxDist * outAndBack);
-        const wobbleX = Math.sin(progress * 40) * 15;
-        const wobbleY = Math.cos(progress * 35) * 15;
-        let scale = 1;
-        if (progress < 0.1) scale = progress * 10; 
-        else if (progress > 0.9) scale = (1 - progress) * 10; 
-        const flip = (baseX + wobbleX) < startX ? 1 : -1; 
-        bee.style.transform = `translate(${baseX + wobbleX}px, ${baseY + wobbleY}px) scaleX(${flip}) scale(${scale})`;
-        requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
-    }
-  </script>
-
-  
-    // Observer ko start karo
-    observer.observe(document.body, { childList: true, subtree: true });
-  </script>
 </body>
 </html>
