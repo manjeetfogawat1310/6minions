@@ -173,10 +173,29 @@ export function initLab() {
   // API helper
   // ------------------------------------------------------------
 
+  // ------------------------------------------------------------
+  // API helper
+  // ------------------------------------------------------------
+
   async function api(url, options = {}) {
+    // 1. Apna token nikal. 
+    // (Note: Agar tune login.js mein token kisi aur naam se save kiya hai jaise 'honeychain_token', toh yahan wahi naam likhna)
+    const token = localStorage.getItem('token'); 
+
+    const headers = {
+      ...options.headers
+    };
+
+    // 2. Token ko headers mein daal de
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    // 3. Naye headers ke sath fetch call maar
     const response = await fetch(url, {
       cache: "no-store",
-      ...options
+      ...options,
+      headers: headers
     });
 
     let data = {};
@@ -220,7 +239,6 @@ export function initLab() {
 
     return data;
   }
-
 
   // ------------------------------------------------------------
   // HTML escaping
