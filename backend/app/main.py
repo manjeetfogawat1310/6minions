@@ -454,7 +454,7 @@ def get_hive(hive_id:int,db:Session=Depends(get_db)):
 
 @app.post('/api/ai/predict')
 def ai_predict(payload:AIPredictRequest,db:Session=Depends(get_db)):
- p=predict(payload.temperature,payload.humidity,payload.weight,payload.audio_feature)
+ p=predict(payload.temperature, payload.humidity, 40.0, payload.audio_feature)
  if payload.hive_id:
   h=db.get(Hive,payload.hive_id)
   if not h: raise HTTPException(404,'Hive not found')
