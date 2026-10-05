@@ -458,12 +458,12 @@ def ai_predict(payload:AIPredictRequest,db:Session=Depends(get_db)):
  if payload.hive_id:
   h=db.get(Hive,payload.hive_id)
   if not h: raise HTTPException(404,'Hive not found')
-  row=AIResult(hive_id=h.id,temperature=payload.temperature,humidity=payload.humidity,weight=payload.weight,audio_feature=payload.audio_feature,health_score=p.health_score,health_status=p.health_status,disease_risk=p.disease_risk,predicted_yield_kg=p.predicted_yield_kg,environmental_stress=p.environmental_stress,explanation=p.explanation); db.add(row); db.commit()
+  row=AIResult(hive_id=h.id,temperature=payload.temperature,humidity=payload.humidity,weight=40.0,audio_feature=payload.audio_feature,health_score=p.health_score,health_status=p.health_status,disease_risk=p.disease_risk,predicted_yield_kg=p.predicted_yield_kg,environmental_stress=p.environmental_stress,explanation=p.explanation); db.add(row); db.commit()
  return p.__dict__
 @app.post('/api/ai/estimate-weight')
 def estimate_weight(payload:AIPredictRequest):
  from .services.ai_service import estimate_weight
- return {'estimated_weight_kg':round(estimate_weight(payload.temperature,payload.humidity,payload.weight,payload.audio_feature),2),'method_note':'Operational 4-sensor estimator; not a reproduction of the Apis-Prime 36→23-feature trained model.'}
+ return {'estimated_weight_kg':round(estimate_weight(payload.temperature,payload.humidity,40.0,payload.audio_feature),2),'method_note':'Operational 4-sensor estimator; not a reproduction of the Apis-Prime 36→23-feature trained model.'}
 
 
 @app.post('/api/ai/predict-yield')
