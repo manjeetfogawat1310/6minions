@@ -1,5 +1,10 @@
 export const API_BASE_URL = "https://sixminions-backend.onrender.com";
 
+
+export function apiURL(path) {
+return `${API_BASE_URL.replace(/\/+$/, "")}/${String(path).replace(/^\/+/, "")}`;
+}
+
 const TIMEOUT_MS = 25000;
 
 export class APIError extends Error {
