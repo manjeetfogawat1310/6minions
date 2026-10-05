@@ -1,11 +1,11 @@
-from datetime import date,timedelta
+from datetime import date, timedelta
 from app.database import SessionLocal, init_db
 
-# Yahan Admin model import kiya hai (apne actual model name ke hisaab se adjust kar lena)
-from backend.app.models import Farmer,Hive,AIResult,HoneyBatch,LabReport,TraceabilityEvent, Admin
-# Password encrypt karne ke liye main.py se function import kiya hai
-from backend.app.main import hash_password 
-from backend.app.services.ai_service import predict
+# 'backend.' hata diya gaya hai
+from app.models import Farmer, Hive, AIResult, HoneyBatch, LabReport, TraceabilityEvent, Admin
+from app.main import hash_password
+from app.services.ai_service import predict
+
 import json
 
 def run():
