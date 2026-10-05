@@ -1,3 +1,5 @@
+import { apiURL } from "./api.js";
+
 const page = () => document.querySelector("#page-traceability");
 
 function make(tag, className = "", text = "") {
@@ -8,7 +10,7 @@ function make(tag, className = "", text = "") {
 }
 
 async function getBatches() {
-  const response = await fetch("/api/batches");
+  const response = await fetch(apiURL("/api/batches"));
   if (!response.ok) throw new Error("Could not load batches.");
   const data = await response.json();
   return Array.isArray(data) ? data : (data.batches || []);
@@ -20,7 +22,7 @@ async function loadTimeline(batchId) {
 
   try {
     const response = await fetch(
-      `/api/traceability/${encodeURIComponent(batchId)}`
+      apiURL(`/api/traceability/${encodeURIComponent(batchId)}`)
     );
 
     if (!response.ok) {
@@ -132,7 +134,7 @@ async function submitEvent(event) {
 
   try {
     const response = await fetch(
-      `/api/traceability/${encodeURIComponent(batchId)}`,
+      apiURL(`/api/traceability/${encodeURIComponent(batchId)}`),
       {
         method: "POST",
         headers: {
