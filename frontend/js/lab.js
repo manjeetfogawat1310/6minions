@@ -1,5 +1,5 @@
 // frontend/js/lab.js
-
+import { apiURL } from "./api.js";
 export function initLab() {
   const page = document.querySelector("#page-lab");
 
