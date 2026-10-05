@@ -201,7 +201,7 @@ export function initLab() {
     }
 
     // 3. Naye headers ke sath fetch call maar
-    const response = await fetch(url, {
+    const response = await fetch(apiURL(url), {
       cache: "no-store",
       ...options,
       headers: headers

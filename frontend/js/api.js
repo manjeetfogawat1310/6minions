@@ -10,10 +10,7 @@ export class APIError extends Error {
     this.data = data;
   }
 }
-
-export function apiURL(path) {
-  return `${API_BASE_URL.replace(/\/+$/, "")}/${String(path).replace(/^\/+/, "")}`;
-}
+ 
 
 export function resourceURL(path) {
   if (typeof path !== "string" || !path.trim()) return null;
