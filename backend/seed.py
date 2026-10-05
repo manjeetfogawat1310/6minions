@@ -15,13 +15,17 @@ def run():
   # Check karte hain ki Admin already hai ya nahi
   if not db.query(Admin).filter_by(admin_id="Admin").first():
    hashed_pw = hash_password("abc123")
-   # Agar tere database mein column ka naam 'password' hai, toh 'password_hash' ki jagah 'password' likhna
-   admin = Admin(admin_id="Admin", password_hash=hashed_pw) 
+   # Yahan state aur district add kar diya hai taaki NOT NULL error na aaye
+   admin = Admin(
+       admin_id="Admin", 
+       password_hash=hashed_pw, 
+       state="West Bengal", 
+       district="Demo District"
+   ) 
    db.add(admin)
    db.commit() # Admin ko turant save kar diya
    print("Demo Admin (Admin / abc123) created successfully.")
   # =================================
-
   if db.query(Farmer).count(): print('Seed already present'); return
   
   regions=['West Bengal','Bihar','Jharkhand','Odisha']; farmers=[]
