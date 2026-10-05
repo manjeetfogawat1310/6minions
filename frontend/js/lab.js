@@ -178,9 +178,18 @@ export function initLab() {
   // ------------------------------------------------------------
 
   async function api(url, options = {}) {
-    // 1. Apna token nikal. 
-    // (Note: Agar tune login.js mein token kisi aur naam se save kiya hai jaise 'honeychain_token', toh yahan wahi naam likhna)
-    const token = localStorage.getItem('token'); 
+    // 1. Local storage se user data nikal aur ID (token) extract kar
+    let token = null;
+    const userString = localStorage.getItem('honeychain_user');
+    
+    if (userString) {
+      try {
+        const userObj = JSON.parse(userString);
+        token = userObj.id; // Yahan se tera ID nikal aayega
+      } catch (e) {
+        console.error("Error parsing user data", e);
+      }
+    }
 
     const headers = {
       ...options.headers
@@ -188,7 +197,7 @@ export function initLab() {
 
     // 2. Token ko headers mein daal de
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers['Authorization'] = `Bearer ${token}`; 
     }
 
     // 3. Naye headers ke sath fetch call maar
@@ -207,22 +216,18 @@ export function initLab() {
     }
 
     if (!response.ok) {
-
       let message =
         data.detail ??
         data.message ??
         data.error ??
         "";
 
-      // FastAPI validation errors arrive as an array.
       if (Array.isArray(message)) {
         message = message
           .map(item => {
-
             const field = Array.isArray(item.loc)
               ? item.loc.join(".")
               : "Request";
-
             return `${field}: ${item.msg || "Invalid value"}`;
           })
           .join("; ");
@@ -239,7 +244,6 @@ export function initLab() {
 
     return data;
   }
-
   // ------------------------------------------------------------
   // HTML escaping
   // ------------------------------------------------------------
